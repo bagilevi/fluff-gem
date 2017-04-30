@@ -2,6 +2,8 @@
 
 Runs RSpec in parallel and optionally displays the results on a web UI.
 
+![screenshot](https://github.com/bagilevi/fluff-web-ui/raw/master/docs/screenshot.png "Screenshot")
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -18,7 +20,7 @@ Or install it yourself as:
 
     $ gem install fluff
 
-For instructions to install the Web UI, see: [fluff-display](https://github.com/bagilevi/fluff).
+For instructions to install the Web UI, see: [fluff-web-ui](https://github.com/bagilevi/fluff-web-ui#installation).
 
 ## Usage
 
