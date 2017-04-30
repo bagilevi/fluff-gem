@@ -1,8 +1,6 @@
 # Fluff
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/fluff`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Runs RSpec in parallel and optionally displays the results on a web UI.
 
 ## Installation
 
@@ -20,9 +18,25 @@ Or install it yourself as:
 
     $ gem install fluff
 
+For instructions to install the Web UI, see: [fluff-display](https://github.com/bagilevi/fluff).
+
 ## Usage
 
-TODO: Write usage instructions here
+Configure using the following environment variables.
+
+Set the database template:
+
+    FLUFF_DB_URL_TEMPLATE=postgres://myuser:mypass@localhost/myapp_test_%{index}
+
+Specify how many processes to run in parallel:
+
+    FLUFF_PARALLELISM=4
+
+If you would like to see the failures in the Web UI then set the same Redis URL
+you have configured for the Web UI. If you don't set this, RSpec will report using
+the `progress` formatter.
+
+    FLUFF_REDIS_URL=redis://localhost:6379
 
 ## Development
 
@@ -32,10 +46,8 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/fluff.
-
+Bug reports and pull requests are welcome on GitHub at https://github.com/bagilevi/fluff.
 
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
-
