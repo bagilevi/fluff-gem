@@ -29,6 +29,8 @@ else
     end
   run_uuid = SecureRandom.uuid
 
+  print_output = redis.blank?
+
   paths = ARGV.reject { |a| a.start_with?('-') }
   paths = ['spec'] if paths.empty?
 
@@ -59,6 +61,10 @@ else
       require 'open3'
       Open3.popen3(cmd) do |stdin, stdout, stderr, thread|
         puts "One thread finished with exit status #{thread.value.exitstatus}"
+        if print_output
+          stdout.each_line { |line| STDOUT.puts line }
+          stderr.each_line { |line| STDERR.puts line }
+        end
         thread.value.exitstatus
       end
     end
