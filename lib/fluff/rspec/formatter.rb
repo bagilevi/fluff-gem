@@ -19,7 +19,9 @@ module Fluff
       def start(notification)
         emit(
           :type => 'start',
-          :version => RSpec::Core::Version::STRING
+          :version => RSpec::Core::Version::STRING,
+          :project_path => (defined?(Rails) ? Rails.root.to_s : Dir.pwd),
+          :lib_paths => Gem.loaded_specs.map { |gem_name, gem_spec| [gem_name, gem_spec.full_gem_path] }
         )
       end
 
