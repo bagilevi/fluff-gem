@@ -38,6 +38,7 @@ else
 
   redis.publish "fluff_shouts", JSON.generate(type: 'start_run', run_uuid: run_uuid) if redis
 
+  puts "[#{Time.current.to_s}]"
   puts "Starting #{groups.size} runners..."
 
   threads = (1 .. groups.size).map do |runner_num|
@@ -54,13 +55,28 @@ else
       cmd << "--format progress " if !redis
       cmd << "--format Fluff::Rspec::Formatter " if redis
       cmd << "#{spec_files.join(' ')}"
-      system(cmd)
+
+      require 'open3'
+      Open3.popen3(cmd) do |stdin, stdout, stderr, thread|
+        puts "One thread finished with exit status #{thread.value.exitstatus}"
+        thread.value.exitstatus
+      end
     end
   end
 
-  threads.each { |thr| thr.join }
+  exit_codes = threads.map { |thr| thr.value }
+  puts "All threads finished."
 
   redis.publish "fluff_shouts", JSON.generate(type: 'end_run', run_uuid: run_uuid) if redis
+
+  puts "[#{Time.current.to_s}]"
+  if exit_codes.any? { |c| c != 0 }
+    puts "\e[31m\nTest suite FAILED.\e[0m"
+    puts
+    exit(1)
+  else
+    puts "\e[32m\nTest suite PASSED.\e[0m"
+  end
 end
 
 puts
