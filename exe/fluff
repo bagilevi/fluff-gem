@@ -9,7 +9,7 @@ RUNNERS = ENV.fetch('FLUFF_PARALLELISM', 2).to_i
 DB_URL_TEMPLATE = ENV.fetch('FLUFF_DB_URL_TEMPLATE')
 
 case command
-when 'setup'
+when '--setup'
   puts "Preparing #{RUNNERS} DBs..."
 
   (1 .. RUNNERS).map do |runner_num|
