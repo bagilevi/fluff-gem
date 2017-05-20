@@ -1,6 +1,7 @@
 RSpec::Support.require_rspec_core "formatters/base_formatter"
 require 'json'
 require 'redis'
+require 'securerandom'
 
 module Fluff
   module Rspec
